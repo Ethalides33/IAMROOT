@@ -14,7 +14,7 @@ def heartbeat():
 def game():
     return render_template('shooter.html')
 
-@app.route('deskclean')
+@app.route('/deskclean')
 def deskclean():
     return render_template('deskclean.html')
 
