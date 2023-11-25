@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             success: function (data) {
                 counter = 1;
-                html = `<div class="row p-0 m-0"><div class="col-12 p-0 m-0 text-center xlsx-head">A</div>`;
+                html = `<div class="row p-0 m-0"><div class="col-3"></div><div class="col-9 p-0 m-0 text-center xlsx-head">A</div>`;
                 for (const d of data) {
                     html += `<div class="row p-0 m-0"><div class="col-3 p-0 m-0 xlsx-left-num text-center">${counter}</div><div class="col-9 p-0 m-0 xlsx-cell text-center">${d.nickname}</div></div>`
                     counter += 1;

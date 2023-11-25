@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
     { "Name": "chien", "positionxgood": "257px", "positionygood": "564px", "positionxbad": "250px", "positionybad": "300px" },
     ];
 
+    var container = document.querySelector('.background-image');
+    var menu = document.getElementById('score_header');
+    container.height = window.innerHeight - menu.offsetHeight;
+
     setInterval(() => {
         $.ajax({
             url: '/heartbeat',
