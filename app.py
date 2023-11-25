@@ -79,4 +79,4 @@ def leaderboardpc():
     return render_template('leaderboardpc.html')
 
 if __name__ == '__main__':
-    app.run(host='10.30.66.60', debug=True)
+    app.run( debug=True)
