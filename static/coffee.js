@@ -24,10 +24,12 @@ document.addEventListener("DOMContentLoaded", function () {
     stanrock.src = "/static/images/rock.png";
     var standrop = new Image();
     standrop.src = "/static/images/drop.png";
-    var ROCK_WIDTH = '';
-    var ROCK_HEIGHT = '';
+
+    
     var cwidth = canvas.width;
     var cheight = canvas.height;
+
+    var score = 0;
 
     var WAVE_FREQ = 5;
 
@@ -97,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Coffee flask
     const coffeeFlask = {
         x: canvas.width / 2 - 25,
-        y: 0,
+        y: 100,
         width: pourcoffee_image.width,
         height: pourcoffee_image.height,
         color: '#8B4513',
@@ -188,6 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 createSplash(coffeeDrops[i]);
                 coffeeCup.fillLevel += 0.5;
+                score = 1000*(coffeeCup.fillLevel/coffeeCup.maxFill);
                 coffeeDrops.splice(i, 1);
                 i--;
             }
@@ -224,6 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
         drawParticles();
         drawRocks();
         drawWater();
+        redrawProgress(score/1000);
         // Draw coffee cup
         // ctx.fillStyle = coffeeCup.color;
         // ctx.fillRect(coffeeCup.x, coffeeCup.y + (coffeeCup.height - coffeeCup.fillLevel), coffeeCup.width, coffeeCup.fillLevel);
@@ -576,6 +580,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         gameLoop();
     }
+
+    function redrawProgress(pct) {
+        x0 = cwidth/5.;
+        y0 = 50;
+        dX = 250;
+        // create a linear gradient in the area of the progress bar
+        var gradient = ctx.createLinearGradient(x0, 50, x0+100, y0)
+        gradient.addColorStop(0.00, '#00FF55');
+        gradient.addColorStop(1.00, '#FF0000');
+      
+        // clear the previous progress bar
+        ctx.clearRect(x0, y0, dX, 20);
+      
+      
+        // re-fill the progress bar with the current progress 
+        ctx.fillStyle = gradient;
+        ctx.fillRect(x0, y0, dX * pct, 20);
+      
+        // outline the full progress bar
+        ctx.strokeStyle = 'black';
+        ctx.strokeRect(x0, y0, dX, 20);
+      
+      }
+
     //begin
     init();
     // Start the game loop
