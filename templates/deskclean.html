@@ -13,43 +13,55 @@
     <!-- <script src="../static/deskclean.js"></script> -->
 </head>
 <body >
-    <div class="background-image" style="background-image: url('{{ url_for('static', filename='images/desk.png') }}');">
+    <div class="background-image" style="background-image: url('{{ url_for('static', filename='images/office_desk.jpg') }}');">
         <div id="timer"><h3 id="instructions"> </h3><h3 id="timerTitle"> </h3></div>
-        <div id="mouse">
-            <img src="{{ url_for('static', filename='images/mouse.png') }}" style="height:75px;"/>
+        <div id="mouse" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/mouse.png') }}" style="height:48px;"/>
         </div>
-        <div id="apple">
-            <img src="{{ url_for('static', filename='images/apple.png') }}" style="width:60px;"/>
+        <div id="mug" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/mug.png') }}" style="height:48px;"/>
         </div>
-        <div id="coffee">
-            <img src="{{ url_for('static', filename='images/coffee.png') }}" style="width:60px;"/>
+        <div id="casse_tete" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/casse_tete.png') }}" style="height:40px;"/>
         </div>
-        <div id="keys">
+        <div id="chien" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/chien.png') }}" style="height:50px;"/>
+        </div>
+        <div id="keys" class="absolute_element">
             <img src="{{ url_for('static', filename='images/keys.png') }}" style="width:60px;"/>
         </div>
-        <div id="wallet">
-            <img src="{{ url_for('static', filename='images/wallet.png') }}" style="width:60px;"/>
+        <div id="wallet" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/wallet.png') }}" style="width:30px;"/>
         </div>
-        <div id="keyboard">
+        <div id="screen" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/screen.png') }}" style="height:250px;"/>
+        </div>
+        <div id="keyboard" class="absolute_element">
             <img src="{{ url_for('static', filename='images/keyboard.png') }}" style="height:250px;"/>
         </div>
-        <div id="mouseGood">
-            <img src="{{ url_for('static', filename='images/mouse.png') }}" style="height:75px;"/>
+        <div id="mouseGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/mouse.png') }}" style="height:48px;"/>
         </div>
-        <div id="appleGood">
-            <img src="{{ url_for('static', filename='images/apple.png') }}" style="width:60px;"/>
+        <div id="mugGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/mug.png') }}" style="height:48px;"/>
         </div>
-        <div id="coffeeGood">
-            <img src="{{ url_for('static', filename='images/coffee.png') }}" style="width:60px;"/>
+        <div id="casse_teteGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/casse_tete.png') }}" style="height:50px;"/>
         </div>
-        <div id="keysGood">
+        <div id="chienGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/chien.png') }}" style="height:60px;"/>
+        </div>
+        <div id="keysGood" class="absolute_element">
             <img src="{{ url_for('static', filename='images/keys.png') }}" style="width:60px;"/>
         </div>
-        <div id="walletGood">
-            <img src="{{ url_for('static', filename='images/wallet.png') }}" style="width:60px;"/>
+        <div id="walletGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/wallet.png') }}" style="width:30px;"/>
         </div>
-        <div id="keyboardGood">
+        <div id="keyboardGood" class="absolute_element">
             <img src="{{ url_for('static', filename='images/keyboard.png') }}" style="height:250px;"/>
+        </div>
+        <div id="screenGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/screen.png') }}" style="height:250px;"/>
         </div>
         <div id="points">
             <h3 id="pointsTitle"></h3>

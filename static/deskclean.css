@@ -6,73 +6,19 @@ body {
   overflow: hidden;
 }
 
-
 .background-image {
-  width: 100%;
-  height: 100vh; 
-  background-size: cover; 
-  background-attachment: fixed; 
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-size: 100% 100%; /* Force l'image à couvrir entièrement le conteneur, peut causer une déformation */
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
-#mouse {
+.absolute_element {
   position: absolute;
   transform: translate(-50%, -50%);
 }
-
-#apple {
-position: absolute;
-transform: translate(-50%, -50%);
-}
-
-#coffee {
-position: absolute;
-transform: translate(-50%, -50%);
-}
-
-#keys {
-position: absolute;
-transform: translate(-50%, -50%);
-}
-
-#wallet {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  }
-
-#keyboard {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  }
-
-  #mouseGood {
-      position: absolute;
-      transform: translate(-50%, -50%);
-    }
-  
-  #appleGood {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  }
-  
-  #coffeeGood {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  }
-  
-  #keysGood {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  }
-    
-  #walletGood {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      }
-  
-  #keyboardGood {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      }
 
 #points {
   position: absolute; /* Position absolue pour utiliser les propriétés de centrage */
