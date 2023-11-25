@@ -128,4 +128,9 @@ document.addEventListener("DOMContentLoaded", function () {
             counter += 1;
         }, 1000);
     }, 25000);
+    history.pushState(null, null, window.top.location.pathname + window.top.location.search);
+    window.addEventListener('popstate', (e) => {
+        e.preventDefault();
+        history.pushState(null, null, window.top.location.pathname + window.top.location.search);
+    });
 });
