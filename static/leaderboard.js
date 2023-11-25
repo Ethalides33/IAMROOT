@@ -19,4 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         },
     });
+    setInterval(() => {
+        $.ajax({
+            url: '/heartbeat',
+            type: 'POST',
+            data: {
+                token: localStorage.getItem('office_game_token') || '',
+            },
+        })
+    }, 3000);
 });

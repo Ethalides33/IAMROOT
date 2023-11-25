@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#submit').on('click', () => {
         if ($('#nickname').val() != '') {
             $('#nickname').prop('disabled', true);
+            $('#submit').prop('disabled', true);
             let nickname = $('#nickname').val();
             let uuid = uuidv4();
             localStorage.setItem('office_game_token', uuid);

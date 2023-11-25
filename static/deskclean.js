@@ -6,7 +6,15 @@ const elements = [{ "Name": "mouse", "positionxgood": "10px", "positionygood": "
 { "Name": "keyboard", "positionxgood": "50px", "positionygood": "500px", "positionxbad": "150px", "positionybad": "300px" }];
 
 window.onload = function () {
-
+    setInterval(() => {
+        $.ajax({
+            url: '/heartbeat',
+            type: 'POST',
+            data: {
+                token: localStorage.getItem('office_game_token') || '',
+            },
+        })
+    }, 3000);
     function hideImageGood(elementId) {
         const element = document.getElementById(elementId.Name+"Good");
         element.style.display = "none";

@@ -1,13 +1,8 @@
 // game.js
 
 document.addEventListener("DOMContentLoaded", function () {
-    let counter = 0;
-    setInterval(() => {
-        if (counter > 30) {
-            window.location.href = '/deskclean';
-        }
-        counter += 1;
-    }, 1000);
+    let keeprunning = true;
+    
     var canvas = document.getElementById("shooter-canvas");
     var ctx = canvas.getContext("2d");
     canvas.style.backgroundColor = "white";
@@ -210,10 +205,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         // Display the score
-        ctx.fillStyle = "black";
-        ctx.font = "24px Arial";
-        ctx.fillText("Score: " + score, 20, 30);
-
+        // ctx.fillStyle = "black";
+        // ctx.font = "24px Arial";
+        // ctx.fillText("Score: " + score, 20, 30);
+        $('#score').text(score);
         if(showText_plus){
             showArcadeText(textX,textY,"+10 !","#2CEAF7");
             showText_plus= false;
@@ -224,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Request the next animation frame
-        requestAnimationFrame(updateGame);
+        if (keeprunning) requestAnimationFrame(updateGame);
     }
 
     // Start the game loop
@@ -377,5 +372,40 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
+    let counter = 0;
+    let callDone = false;
+    setInterval(() => {
+        if (counter > 30) {
+            if (!callDone) {
+                keeprunning = false;
+                $.ajax({
+                    method: 'POST',
+                    url: '/score',
+                    data: {
+                        token: localStorage.getItem('office_game_token') || '',
+                        score: score,
+                    },
+                    success: function() {
+                        callDone = true;
+                        console.log('SUCCESS');
+                        console.log($);
+                        $('.score_header').html('<div class="row"><div class="col-12 text-center"><h2><x-sign>Score saved !</x-sign></h2></div></div>');
+                    }
+                });
+                setTimeout(function(){
+                    window.location.href = '/deskclean';
+                }, 3000);
+            }
+        }
+        counter += 1;
+    }, 1000);
+    setInterval(() => {
+        $.ajax({
+            url: '/heartbeat',
+            type: 'POST',
+            data: {
+                token: localStorage.getItem('office_game_token') || '',
+            },
+        })
+    }, 3000);
 });

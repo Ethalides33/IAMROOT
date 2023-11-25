@@ -79,7 +79,7 @@ x-sign {
     border: none;
     font-size: 20px!important;
 }
-.btn-primary:active,.btn-primary:focus,.btn-primary:hover{
+.btn-primary:active,.btn-primary:focus,.btn-primary:hover, .btn-primary:disabled{
     box-shadow: none;
     text-shadow: none;
     background: azure;
