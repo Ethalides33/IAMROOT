@@ -5,50 +5,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Add your CSS and JavaScript file references here -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='deskclean.css') }}">
     
     <!-- <script src="../static/deskclean.js"></script> -->
 </head>
 <body >
-    <div class="background-image" style="background-image: url('{{ url_for('static', filename='images/desk.png') }}');">
-        <div id="timer"><h3 id="instructions"> </h3><h3 id="timerTitle"> </h3></div>
-        <div id="mouse">
-            <img src="{{ url_for('static', filename='images/mouse.png') }}" style="height:75px;"/>
+    <div class="container-flex">
+        <div id="score_header">
+            <div class="row score_header_container d-none">
+                <div class="col-6 text-end me-0 pe-0">
+                    <h2 class="me-0 pe-0">
+                        <x-sign>Score : </x-sign>
+                    </h2>
+                </div>
+                <div class="col-6 text-start ms-0 ps-0">
+                    <h2 class="ms-0 ps-0">
+                        <x-sign id="score"></x-sign>
+                    </h2>
+                </div>
+            </div>
+            <div class="row score_header_message">
+                <div class="col-12 text-center">
+                    <h2 class="m-0 p-0">
+                        <x-sign id="message"></x-sign>
+                    </h2>
+                </div>
+            </div>
         </div>
-        <div id="apple">
-            <img src="{{ url_for('static', filename='images/apple.png') }}" style="width:60px;"/>
+    </div>
+    <div class="background-image" style="background-image: url('{{ url_for('static', filename='images/office_desk.jpg') }}');">
+        <div id="mouse" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/mouse.png') }}" style="height:48px;"/>
         </div>
-        <div id="coffee">
-            <img src="{{ url_for('static', filename='images/coffee.png') }}" style="width:60px;"/>
+        <div id="mug" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/mug.png') }}" style="height:48px;"/>
         </div>
-        <div id="keys">
+        <div id="casse_tete" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/casse_tete.png') }}" style="height:40px;"/>
+        </div>
+        <div id="chien" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/chien.png') }}" style="height:50px;"/>
+        </div>
+        <div id="keys" class="absolute_element">
             <img src="{{ url_for('static', filename='images/keys.png') }}" style="width:60px;"/>
         </div>
-        <div id="wallet">
-            <img src="{{ url_for('static', filename='images/wallet.png') }}" style="width:60px;"/>
+        <div id="wallet" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/wallet.png') }}" style="width:30px;"/>
         </div>
-        <div id="keyboard">
+        <div id="screen" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/screen.png') }}" style="height:250px;"/>
+        </div>
+        <div id="keyboard" class="absolute_element">
             <img src="{{ url_for('static', filename='images/keyboard.png') }}" style="height:250px;"/>
         </div>
-        <div id="mouseGood">
-            <img src="{{ url_for('static', filename='images/mouse.png') }}" style="height:75px;"/>
+        <div id="mouseGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/mouse.png') }}" style="height:48px;"/>
         </div>
-        <div id="appleGood">
-            <img src="{{ url_for('static', filename='images/apple.png') }}" style="width:60px;"/>
+        <div id="mugGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/mug.png') }}" style="height:48px;"/>
         </div>
-        <div id="coffeeGood">
-            <img src="{{ url_for('static', filename='images/coffee.png') }}" style="width:60px;"/>
+        <div id="casse_teteGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/casse_tete.png') }}" style="height:50px;"/>
         </div>
-        <div id="keysGood">
+        <div id="chienGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/chien.png') }}" style="height:60px;"/>
+        </div>
+        <div id="keysGood" class="absolute_element">
             <img src="{{ url_for('static', filename='images/keys.png') }}" style="width:60px;"/>
         </div>
-        <div id="walletGood">
-            <img src="{{ url_for('static', filename='images/wallet.png') }}" style="width:60px;"/>
+        <div id="walletGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/wallet.png') }}" style="width:30px;"/>
         </div>
-        <div id="keyboardGood">
+        <div id="keyboardGood" class="absolute_element">
             <img src="{{ url_for('static', filename='images/keyboard.png') }}" style="height:250px;"/>
+        </div>
+        <div id="screenGood" class="absolute_element">
+            <img src="{{ url_for('static', filename='images/screen.png') }}" style="height:250px;"/>
         </div>
         <div id="points">
             <h3 id="pointsTitle"></h3>

@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#submit').on('click', () => {
         if ($('#nickname').val() != '') {
             $('#nickname').prop('disabled', true);
+            $('#submit').prop('disabled', true);
             let nickname = $('#nickname').val();
             let uuid = uuidv4();
             localStorage.setItem('office_game_token', uuid);
@@ -38,12 +39,27 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         })
     }, 3000);
+    function checkStart() {
+        $.ajax({
+            url: '/getstart',
+            type: 'POST',
+            success: function (data) {
+                console.log(data[0].value);
+                d = new Date(data[0].value);
+                nd = new Date();
+                $('#countdown').text(parseInt((d-nd)/1000));
+            },
+        })
+    }
+    checkStart();
+    setInterval(() => {
+        checkStart();
+    }, 5000);
     setInterval(() => {
         if (parseInt($('#countdown').text()) > 0) {
             $('#countdown').text(parseInt($('#countdown').text()) - 1);
         } else {
-            // window.location.href = '/shooter';
-            console.log('else');
+            window.location.href = '/shooter';
         }
     }, 1000);
 });

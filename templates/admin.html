@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+</head>
+<body>
+    <input style="width: 200px; height: 200px;" id="timer" type="number" value="90"/>
+    <button id="gogogo" style="width: 400px; height: 300px; font-size: 30px;">Launch in 1m30</button>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $('#gogogo').on('click', function(){
+            var time = $('#timer').val();
+            $.ajax({
+                url: '/setstart',
+                method: 'POST',
+                data: {
+                    timer: time
+                }
+            });
+        });
+    </script>
+</body>
+</html>
