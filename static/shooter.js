@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.style.backgroundColor = "white";
 
     var background = new Image();
-    background.src = "/static/images/office.png";
+    background.src = "/static/images/office3.avif";
 
     var playerImage = new Image();
     playerImage.src = "/static/images/avatar.png";
@@ -15,14 +15,14 @@ document.addEventListener("DOMContentLoaded", function () {
     playerImage.height = 50; // Set the height of the player image
 
     var enemyImage_printer = new Image();
-    enemyImage_printer.src = "/static/images/brokenprinter.png";
-    enemyImage_printer.width = Math.floor(playerImage.width * (2 / 3.));
-    enemyImage_printer.height = Math.floor(playerImage.width * (2 / 3.));
+    enemyImage_printer.src = "/static/images/brokenprinter2.png";
+    enemyImage_printer.width = Math.floor(playerImage.width);
+    enemyImage_printer.height = Math.floor(playerImage.width);
 
     var enemyImage_merge = new Image();
     enemyImage_merge.src = "/static/images/mergeconflict.png";
-    enemyImage_merge.width = Math.floor(1.5 * playerImage.width);
-    enemyImage_merge.height = Math.floor(playerImage.height);
+    enemyImage_merge.width = Math.floor(1.75 * playerImage.width);
+    enemyImage_merge.height = Math.floor(1.75*playerImage.height);
 
     var enemyImage_emails = new Image();
     enemyImage_emails.src = "/static/images/emails.png";
@@ -33,6 +33,17 @@ document.addEventListener("DOMContentLoaded", function () {
     enemyImage_bluescreen.src = "/static/images/bluescreen.png";
     enemyImage_bluescreen.width = Math.floor(playerImage.width);
     enemyImage_bluescreen.height = Math.floor(playerImage.height);
+
+    var enemyImage_ringingphone = new Image();
+    enemyImage_ringingphone.src = "/static/images/ringingphone.png";
+    enemyImage_ringingphone.width = Math.floor(playerImage.width);
+    enemyImage_ringingphone.height = Math.floor(playerImage.height);
+
+
+    var enemyImage_computervirus = new Image();
+    enemyImage_computervirus.src = "/static/images/computervirus.png";
+    enemyImage_computervirus.width = Math.floor(1.5*playerImage.width);
+    enemyImage_computervirus.height = Math.floor(1.5*playerImage.height);
 
     var successSound = new Audio('/static/images/good.mp3');
     var damageSound = new Audio('/static/images/cutexplosionSound.wav');
@@ -102,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateGame() {
         // Generate enemies attracted to the player
         if (Math.random() < 0.02) {
-            var dice = Math.floor(Math.random() * 4);
+            var dice = Math.floor(Math.random() * 6);
             console.log(dice);
             var enemyText;
             switch (dice) {
@@ -117,6 +128,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     break;
                 case 3:
                     enemyText = enemyImage_bluescreen;
+                    break;
+                case 4:
+                    enemyText = enemyImage_ringingphone;
+                    break;
+                case 5:
+                    enemyText = enemyImage_computervirus;
             }
             var enemy = {
                 radius: enemyText.width,
