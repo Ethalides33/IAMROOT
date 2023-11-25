@@ -43,8 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (parseInt($('#countdown').text()) > 0) {
             $('#countdown').text(parseInt($('#countdown').text()) - 1);
         } else {
-            // window.location.href = '/shooter';
-            console.log('else');
+            window.location.href = '/shooter';
         }
     }, 1000);
 });

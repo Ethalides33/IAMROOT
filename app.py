@@ -47,8 +47,6 @@ def heartbeat():
     if data:
         insert_update('UPDATE users SET last_update =? WHERE token =?', (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), data))
     data = select('SELECT * FROM users')
-    print('DATA :::')
-    print(data)
     for user in data:
         if user.get('last_update') and user.get('last_update') < (datetime.now() - relativedelta(seconds=20)).strftime('%Y-%m-%d %H:%M:%S'):
             insert_update('DELETE FROM users WHERE id=%s' % user.get('id'))
@@ -88,6 +86,10 @@ def add_score():
         score = data.get('score')
         insert_update('UPDATE users SET score=score+? WHERE token=?', (score, token))
         return 'ok'
+    
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
 
 if __name__ == '__main__':
     app.run(host='10.30.66.60', debug=True)

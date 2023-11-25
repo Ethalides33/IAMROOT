@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 damageSound.play();
                 showText_minus = true;
                 enemies.splice(index, 1);
-                score -= 10;
+                score -= 5;
                 score = Math.max(0, score);
                 applyRedTranslucentEffect();
             }
