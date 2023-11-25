@@ -1,0 +1,14 @@
+.xlsx-head{
+    border: 1px black solid;
+}
+.xlsx-left-num{
+    border: 1px black solid;
+    border-top: none;
+}
+.xlsx-cell{
+    border-bottom: 1px black solid;
+    border-right: 1px black solid;
+}
+.col-8.d-flex{
+    height: 80vh;
+}

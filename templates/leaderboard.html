@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <!-- Add your CSS and JavaScript file references here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='leaderboard.css') }}">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='leaderboard.js') }}"></script>
+</head>
+<body>
+    <div class="container-fluid p-0 t-0">
+        <div class="container">
+            <div class="row m-0 p-0">
+                <div class="col-12 m-0 p-0">
+                    <h1 class="text-center">
+                        <span class="glowy" style="animation-delay: calc(200ms * 1)">L</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 2)">E</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 3)">A</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 4)">D</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 5)">E</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 6)">R</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 7)">B</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 8)">O</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 9)">A</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 10)">R</span> 
+                        <span class="glowy" style="animation-delay: calc(200ms * 11)">D</span>
+                    </h1>
+                </div>
+            </div>
+            <div class="row pt-5">
+                <div class="col-6 text-center name_div pt-3 ps-3 pe-3">
+                    <h1>
+                        <span class="glowy2" style="animation-delay: calc(200ms * 1)">N</span>
+                        <span class="glowy2" style="animation-delay: calc(200ms * 2)">A</span>
+                        <span class="glowy2" style="animation-delay: calc(200ms * 3)">M</span>
+                        <span class="glowy2" style="animation-delay: calc(200ms * 4)">E</span>
+                    </h1>
+                </div>
+                <div class="col-6 text-center score_div pt-3 ps-3 pe-3">
+                    <h1>
+                        <span class="glowy2" style="animation-delay: calc(200ms * 5)">S</span>
+                        <span class="glowy2" style="animation-delay: calc(200ms * 4)">C</span>
+                        <span class="glowy2" style="animation-delay: calc(200ms * 3)">O</span>
+                        <span class="glowy2" style="animation-delay: calc(200ms * 2)">R</span>
+                        <span class="glowy2" style="animation-delay: calc(200ms * 1)">E</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
