@@ -65,6 +65,10 @@ def register():
 def game():
     return render_template('shooter.html')
 
+@app.route('/coffee')
+def coffee():
+    return render_template('coffee.html')
+
 @app.route('/deskclean')
 def deskclean():
     return render_template('deskclean.html')
@@ -81,4 +85,4 @@ def leaderboardpc():
     return render_template('leaderboardpc.html')
 
 if __name__ == '__main__':
-    app.run(host='10.30.66.60', debug=True)
+    app.run(host='0.0.0.0', debug=True)
