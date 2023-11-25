@@ -1,7 +1,13 @@
 // game.js
 
 document.addEventListener("DOMContentLoaded", function () {
-
+    let counter = 0;
+    setInterval(() => {
+        if (counter > 30) {
+            window.location.href = '/deskclean';
+        }
+        counter += 1;
+    }, 1000);
     var canvas = document.getElementById("shooter-canvas");
     var ctx = canvas.getContext("2d");
     canvas.style.backgroundColor = "white";
