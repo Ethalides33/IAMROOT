@@ -34,7 +34,9 @@ document.addEventListener("DOMContentLoaded", function () {
     enemyImage_bluescreen.width = Math.floor(playerImage.width);
     enemyImage_bluescreen.height = Math.floor(playerImage.height);
 
-    var explodeSound = new Audio('/static/images/cutexplosionSound.wav');
+    var successSound = new Audio('/static/images/good.mp3');
+    var damageSound = new Audio('/static/images/cutexplosionSound.wav');
+
     // Player score
     var score = 0;
 
@@ -77,8 +79,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 y < enemy.y + enemy.radius
             ) {
                 // Remove the enemy and increase the score
-                explodeSound.load();
-                explodeSound.play();
+                successSound.load();
+                successSound.play();
                 render.play();
                 animateParticules(enemy.x, enemy.y);
                 enemies.splice(i, 1);
@@ -152,6 +154,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 player.y < enemy.y + enemy.radius
             ) {
                 // Player hit! 
+                damageSound.load();
+                damageSound.play();
                 enemies.splice(index, 1);
                 score -= 10;
                 score = Math.max(0, score);
