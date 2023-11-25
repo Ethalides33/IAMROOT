@@ -48,7 +48,9 @@ def heartbeat():
         insert_update('UPDATE users SET last_update =? WHERE token =?', (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), data))
     data = select('SELECT * FROM users')
     for user in data:
-        if user.get('last_update') < (datetime.now() - relativedelta(seconds=10)).strftime('%Y-%m-%d %H:%M:%S'):
+        if user.get('last_update') and user.get('last_update') < (datetime.now() - relativedelta(seconds=10)).strftime('%Y-%m-%d %H:%M:%S'):
+            insert_update('DELETE FROM users WHERE id=%s' % user.get('id'))
+        if not user.get('last_update'):
             insert_update('DELETE FROM users WHERE id=%s' % user.get('id'))
     return data
 

@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
         );
     }
-
-    console.log(uuidv4());
     $('#submit').on('click', () => {
         if ($('#nickname').val() != '') {
             $('#nickname').prop('disabled', true);
@@ -30,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 token: localStorage.getItem('office_game_token') || '',
             },
             success: function (data) {
-                console.log('success : ', data);
                 counter = 1;
                 html = `<div class="row p-0 m-0"><div class="col-12 p-0 m-0 text-center xlsx-head">A</div>`;
                 for (const d of data) {
