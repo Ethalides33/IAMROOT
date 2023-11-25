@@ -31,61 +31,58 @@ document.addEventListener("DOMContentLoaded", function () {
         element.style.top = elementId.positionygood;
     }
     elements.forEach(placeImage);
-});
 
+    function addTouchMoveListener(elementId) {
+        const element = document.getElementById(elementId.Name);
 
+        element.addEventListener('touchmove', function (e) {
+            const touchLocation = e.targetTouches[0];
+            element.style.left = touchLocation.pageX + 'px';
+            element.style.top = touchLocation.pageY + 'px';
+        });
+    };
 
-function addTouchMoveListener(elementId) {
-    const element = document.getElementById(elementId.Name);
+    function shakePosition(elementId) {
+        var element = document.getElementById(elementId.Name);
+        element.style.left = elementId.positionxbad;
+        element.style.top = elementId.positionybad;
+    };
 
-    element.addEventListener('touchmove', function (e) {
-        const touchLocation = e.targetTouches[0];
-        element.style.left = touchLocation.pageX + 'px';
-        element.style.top = touchLocation.pageY + 'px';
-    });
-};
+    function parsePosition(position) {
+        return parseInt(position.slice(0, -2));
+    };
 
-function shakePosition(elementId) {
-    var element = document.getElementById(elementId.Name);   
-    element.style.left = elementId.positionxbad;
-    element.style.top = elementId.positionybad;
-};
-
-function parsePosition(position) {
-    return parseInt(position.slice(0, -2));
-};
-
-var points = 1000;
-function countPoints(elementId) {
-    var element = document.getElementById(elementId.Name);
-    xdistance = Math.abs(parsePosition(element.style.left) - parsePosition(elementId.positionxgood));
-    ydistance = Math.abs(parsePosition(element.style.top) - parsePosition(elementId.positionygood));
-    final_distance = Math.pow(Math.pow(xdistance, 2) + Math.pow(ydistance, 2), 0.5);
-    if (final_distance > 125) {
-        final_distance = 125;
-    }
-    points = points - final_distance;
-    if (points < 0){
-        points = 0;
+    var points = 1000;
+    function countPoints(elementId) {
+        var element = document.getElementById(elementId.Name);
+        xdistance = Math.abs(parsePosition(element.style.left) - parsePosition(elementId.positionxgood));
+        ydistance = Math.abs(parsePosition(element.style.top) - parsePosition(elementId.positionygood));
+        final_distance = Math.pow(Math.pow(xdistance, 2) + Math.pow(ydistance, 2), 0.5);
+        if (final_distance > 125) {
+            final_distance = 125;
+        }
+        points = points - final_distance;
+        if (points < 0) {
+            points = 0;
+        }
     }
 
 
 
     function scoreDisplay(points) {
         const pointsDiv = document.getElementById('points');
-        const pointsTitle = document.getElementById('pointsTitle');
-        pointsDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
-        const texte = "SCORE : " + Math.round(points);
-        pointsTitle.textContent = texte;
+        $('.score_header_message').hide();
+        $('.score_header_container').removeClass('d-none');
+        $('#score').text(Math.round(points));
     };
 
-    function countdown(secondes) {
-        const timerDisplay = document.getElementById('timerTitle');
+    function countdown(secondes, message) {
+        const timerDisplay = document.getElementById('message');
         let seconds = secondes;
-        timerDisplay.textContent = seconds;
+        timerDisplay.textContent = message + " (" + seconds + ")";
         const countdownInterval = setInterval(function () {
             seconds--;
-            timerDisplay.textContent = seconds;
+            timerDisplay.textContent = message + " (" + seconds + ")";
 
             if (seconds <= 0) {
                 clearInterval(countdownInterval);
@@ -93,11 +90,7 @@ function countPoints(elementId) {
             }
         }, 1000); // Mettre à jour chaque seconde (1000 millisecondes = 1 seconde)
     }
-    function instructions(text) {
-        const instructionsDisplay = document.getElementById('instructions');
-        instructionsDisplay.textContent = text;
 
-    }
     function showImageGood(elementId) {
         const element = document.getElementById(elementId.Name + "Good");
         element.style.display = "block";
@@ -106,9 +99,8 @@ function countPoints(elementId) {
         element.style.top = elementId.positionygood;
     }
 
-    instructions(" Mémorisez");
-    countdown(10);
-    setTimeout(function () { instructions(""); elements.forEach(shakePosition); elements.forEach(addTouchMoveListener); countdown(15); }, 10000);
+    countdown(10, "Mémorisez");
+    setTimeout(function () { elements.forEach(shakePosition); elements.forEach(addTouchMoveListener); countdown(15, "Replacez"); }, 10000);
 
     let doCall = true;
     setTimeout(function () {
@@ -120,7 +112,7 @@ function countPoints(elementId) {
                 url: '/score',
                 method: 'POST',
                 data: {
-                    score: points,
+                    score: Math.round(points),
                     token: localStorage.getItem('office_game_token')
                 },
                 success: function (data) {
@@ -136,5 +128,4 @@ function countPoints(elementId) {
             counter += 1;
         }, 1000);
     }, 25000);
-
-};
+});
