@@ -10,6 +10,7 @@ app = Flask(__name__)
 db = sqlite3.connect('db.db')
 cr = db.cursor()
 cr.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, nickname TEXT, score INTEGER, token TEXT, last_update DATETIME)')
+cr.execute('CREATE TABLE IF NOT EXISTS config (key TEXT, value TEXT)')
 db.commit()
 db.close()
 
@@ -51,6 +52,18 @@ def heartbeat():
         if user.get('last_update') and user.get('last_update') < (datetime.now() - relativedelta(seconds=20)).strftime('%Y-%m-%d %H:%M:%S'):
             insert_update('DELETE FROM users WHERE id=%s' % user.get('id'))
     return data
+
+@app.route('/getstart', methods=['POST'])
+def getstart():
+    data = select("SELECT value FROM config WHERE key='start'")
+    return data
+
+@app.route('/setstart', methods=['POST'])
+def setstart():
+    timer = int(request.form.get('timer'))
+    date = (datetime.now() + relativedelta(seconds=timer)).strftime('%Y-%m-%d %H:%M:%S')
+    insert_update("UPDATE config SET value='%s' WHERE key='start'" % date)
+    return 'ok'
 
 @app.route('/register', methods=['POST'])
 def register():

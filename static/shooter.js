@@ -7,6 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
     var ctx = canvas.getContext("2d");
     canvas.style.backgroundColor = "white";
 
+    resize_canvas();
+    function resize_canvas() {
+        var menu = document.getElementById('score_header');
+        canvas.height = window.innerHeight - menu.offsetHeight;
+    }
+
     var background = new Image();
     background.src = "/static/images/office3.avif";
 
@@ -263,6 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showArcadeText(x, y, text, color) {
         var textElement = document.createElement("div");
+        textElement.classList.add('no-select');
         textElement.style.position = "absolute";
         textElement.style.left = x + "px";
         textElement.style.top = y + "px";
@@ -389,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         callDone = true;
                         console.log('SUCCESS');
                         console.log($);
-                        $('.score_header').html('<div class="row"><div class="col-12 text-center"><h2><x-sign>Score saved !</x-sign></h2></div></div>');
+                        $('#score_header').html('<div class="row"><div class="col-12 text-center"><h2><x-sign>Score saved !</x-sign></h2></div></div>');
                     }
                 });
                 setTimeout(function(){

@@ -39,6 +39,22 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         })
     }, 3000);
+    function checkStart() {
+        $.ajax({
+            url: '/getstart',
+            type: 'POST',
+            success: function (data) {
+                console.log(data[0].value);
+                d = new Date(data[0].value);
+                nd = new Date();
+                $('#countdown').text(parseInt((d-nd)/1000));
+            },
+        })
+    }
+    checkStart();
+    setInterval(() => {
+        checkStart();
+    }, 5000);
     setInterval(() => {
         if (parseInt($('#countdown').text()) > 0) {
             $('#countdown').text(parseInt($('#countdown').text()) - 1);
