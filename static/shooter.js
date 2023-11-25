@@ -50,6 +50,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Enemies array
     var enemies = [];
 
+
+    var showText_plus = false;
+    var showText_minus = false;
+    var textY = 0;
+    var textX = 0;
+
     // Event listeners for mouse click or touch
     canvas.addEventListener("mousedown", handleMouseDown, false);
     canvas.addEventListener("touchstart", handleTouchStart, false);
@@ -82,7 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 successSound.load();
                 successSound.play();
                 render.play();
-                animateParticules(enemy.x, enemy.y);
+                showText_plus=true;
+                textX = enemy.x;
+                textY = enemy.y;
+                animateParticules(enemy.x, enemy.y, "+10 !");
                 enemies.splice(i, 1);
                 score += 10;
                 return; // Exit the loop if a hit is detected
@@ -156,6 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Player hit! 
                 damageSound.load();
                 damageSound.play();
+                showText_minus = true;
                 enemies.splice(index, 1);
                 score -= 10;
                 score = Math.max(0, score);
@@ -181,6 +191,15 @@ document.addEventListener("DOMContentLoaded", function () {
         ctx.font = "24px Arial";
         ctx.fillText("Score: " + score, 20, 30);
 
+        if(showText_plus){
+            showArcadeText(textX,textY,"+10 !","#2CEAF7");
+            showText_plus= false;
+        }
+        if(showText_minus){
+            showArcadeText(player.x+25,player.y,"-5 !","#DA0646");
+            showText_minus = false;
+        }
+
         // Request the next animation frame
         requestAnimationFrame(updateGame);
     }
@@ -204,6 +223,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.body.appendChild(overlay);
 
+
+
+    var container = document.createElement("div");
+    container.style.position = "relative";
+    document.body.appendChild(container);
+
+    // Append the canvas to the container
+    container.appendChild(canvas);
+
     // Function to apply the red translucent effect
     function applyRedTranslucentEffect() {
         overlay.style.display = "block"; // Show the overlay
@@ -212,6 +240,30 @@ document.addEventListener("DOMContentLoaded", function () {
     function resetBackground() {
         overlay.style.display = "none"; // Hide the overlay after a short delay
     }
+
+
+
+    function showArcadeText(x, y, text, color) {
+        var textElement = document.createElement("div");
+        textElement.style.position = "absolute";
+        textElement.style.left = x + "px";
+        textElement.style.top = y + "px";
+        textElement.style.font = "bold 24px Arial";
+        textElement.style.color = color;
+        textElement.textContent = text;
+
+        // Set a higher z-index for the text element
+        textElement.style.zIndex = "1";
+
+        container.appendChild(textElement);
+
+        // Optionally, clear the textElement after a certain duration
+        var timeoutId = setTimeout(function () {
+            container.removeChild(textElement);
+        }, 500); // Adjust the duration as needed
+    }
+
+
     function setParticuleDirection(p) {
         var angle = anime.random(0, 360) * Math.PI / 180;
         var value = anime.random(50, 180);
