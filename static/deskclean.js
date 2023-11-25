@@ -31,14 +31,24 @@ document.addEventListener("DOMContentLoaded", function () {
         element.style.top = elementId.positionygood;
     }
     elements.forEach(placeImage);
-
+    
+    function parsePosition(position) {
+        return parseInt(position.slice(0, -2));
+    };
     function addTouchMoveListener(elementId) {
         const element = document.getElementById(elementId.Name);
-
         element.addEventListener('touchmove', function (e) {
             const touchLocation = e.targetTouches[0];
-            element.style.left = touchLocation.pageX + 'px';
-            element.style.top = touchLocation.pageY + 'px';
+            if (parsePosition(element.style.left) + (touchLocation.target.width/2) > self.screen.width ){
+                element.style.left = self.screen.width - (touchLocation.target.width/2) + 'px';
+                element.style.top = touchLocation.pageY + 'px';             
+            } else if (parsePosition(element.style.top) + (touchLocation.target.height/2) > self.screen.height ){
+                element.style.top = self.screen.height - (touchLocation.target.height/2) + 'px';   
+                element.style.left = touchLocation.pageX + 'px';
+            } else {
+                element.style.left = touchLocation.pageX + 'px';
+                element.style.top = touchLocation.pageY + 'px';
+            }
         });
     };
 
@@ -48,9 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
         element.style.top = elementId.positionybad;
     };
 
-    function parsePosition(position) {
-        return parseInt(position.slice(0, -2));
-    };
 
     var points = 1000;
     function countPoints(elementId) {

@@ -3,7 +3,7 @@
 import sqlite3
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -51,7 +51,7 @@ def heartbeat():
     for user in data:
         if user.get('last_update') and user.get('last_update') < (datetime.now() - relativedelta(seconds=20)).strftime('%Y-%m-%d %H:%M:%S'):
             insert_update('DELETE FROM users WHERE id=%s' % user.get('id'))
-    return data
+    return jsonify(data)
 
 @app.route('/getstart', methods=['POST'])
 def getstart():
@@ -109,4 +109,8 @@ def admin():
     return render_template('admin.html')
 
 if __name__ == '__main__':
+<<<<<<< Updated upstream
     app.run(host='0.0.0.0', debug=True)
+=======
+    app.run( debug=True)
+>>>>>>> Stashed changes
