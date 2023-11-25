@@ -31,11 +31,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 counter = 1;
                 html = `<div class="row p-0 m-0"><div class="col-12 p-0 m-0 text-center xlsx-head">A</div>`;
                 for (const d of data) {
-                    html += `<div class="row p-0 m-0"><div class="col-2 p-0 m-0 xlsx-left-num text-center">${counter}</div><div class="col-10 p-0 m-0 xlsx-cell text-center">${d.nickname}</div></div>`
+                    html += `<div class="row p-0 m-0"><div class="col-3 p-0 m-0 xlsx-left-num text-center">${counter}</div><div class="col-9 p-0 m-0 xlsx-cell text-center">${d.nickname}</div></div>`
                     counter += 1;
                 }
                 $('#usersDiv').html(html);
             },
         })
     }, 3000);
+    setInterval(() => {
+        if (parseInt($('#countdown').text()) > 0) {
+            $('#countdown').text(parseInt($('#countdown').text()) - 1);
+        } else {
+            // window.location.href = '/shooter';
+            console.log('else');
+        }
+    }, 1000);
 });

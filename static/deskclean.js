@@ -96,3 +96,14 @@ countdown(10);
 setTimeout(function () { instructions("");;elements.forEach(shakePosition); elements.forEach(addTouchMoveListener);countdown(15); }, 10000);
 
 setTimeout(function () { elements.forEach(countPoints); scoreDisplay(points); elements.forEach(showImageGood) }, 25000);
+setTimeout(function () { 
+    elements.forEach(countPoints);
+    scoreDisplay(points); 
+    let counter = 0;
+    setInterval(() => {
+        if (counter > 5) {
+            window.location.href = '/leaderboard';
+        }
+        counter += 1;
+    }, 1000);
+}, 20000);

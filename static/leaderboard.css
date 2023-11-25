@@ -43,13 +43,13 @@ x-sign {
     font-size: 40px;
 }
 
-.glowy2{
+.glowy2 {
     font-size: 32px;
     color: white;
 }
 
 @keyframes flicker {
-    
+
     0%,
     100% {
         color: aqua;
@@ -91,8 +91,8 @@ x-sign {
     }
 }
 
-.glowy{
-    animation: zoomup 2s linear infinite;
+.glowy {
+    animation: zoomup 3s linear infinite;
     animation-delay: calc(200ms * var(--i));
     color: white;
 }
