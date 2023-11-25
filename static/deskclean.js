@@ -7,6 +7,12 @@ const elements = [{ "Name": "mouse", "positionxgood": "10px", "positionygood": "
 
 window.onload = function () {
 
+    function hideImageGood(elementId) {
+        const element = document.getElementById(elementId.Name+"Good");
+        element.style.display = "none";
+    }
+    elements.forEach(hideImageGood); 
+
     function placeImage(elementId) {
         const element = document.getElementById(elementId.Name);
         element.style.left = elementId.positionxgood;
@@ -34,9 +40,6 @@ function shakePosition(elementId) {
     element.style.top = elementId.positionybad;
 };
 
-function returnPosition(elementId) {
-    var element = document.getElementById(elementId.Name);
-};
 function parsePosition(position) {
     return parseInt(position.slice(0, -2));
 };
@@ -80,8 +83,16 @@ function instructions(text) {
     instructionsDisplay.textContent = text;
 
 }
-instructions(" Mémorisez");
-countdown(5);
-setTimeout(function () { instructions("");;elements.forEach(shakePosition); elements.forEach(addTouchMoveListener);countdown(15); }, 5000);
+function showImageGood(elementId) {
+    const element = document.getElementById(elementId.Name+"Good");
+    element.style.display = "block";
+    element.style.opacity = 0.3;
+    element.style.left = elementId.positionxgood;
+    element.style.top = elementId.positionygood;
+}
 
-setTimeout(function () { elements.forEach(countPoints); scoreDisplay(points); }, 20000);
+instructions(" Mémorisez");
+countdown(10);
+setTimeout(function () { instructions("");;elements.forEach(shakePosition); elements.forEach(addTouchMoveListener);countdown(15); }, 10000);
+
+setTimeout(function () { elements.forEach(countPoints); scoreDisplay(points); elements.forEach(showImageGood) }, 25000);
