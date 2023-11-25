@@ -6,22 +6,35 @@ document.addEventListener("DOMContentLoaded", function () {
     var ctx = canvas.getContext("2d");
     canvas.style.backgroundColor = "white";
 
+    var background = new Image();
+    background.src = "/static/images/office.png";
+
     var playerImage = new Image();
-    playerImage.src = "/static/images/avatar.png"
+    playerImage.src = "/static/images/avatar.png";
     playerImage.width = 50; // Set the width of the player image
     playerImage.height = 50; // Set the height of the player image
 
     var enemyImage_printer = new Image();
     enemyImage_printer.src = "/static/images/brokenprinter.png";
-    enemyImage_printer.width = Math.floor(playerImage.width * (2 / 3.))
-    enemyImage_printer.height = Math.floor(playerImage.width * (2 / 3.))
+    enemyImage_printer.width = Math.floor(playerImage.width * (2 / 3.));
+    enemyImage_printer.height = Math.floor(playerImage.width * (2 / 3.));
 
     var enemyImage_merge = new Image();
     enemyImage_merge.src = "/static/images/mergeconflict.png";
-    enemyImage_merge.width = Math.floor(1.5*playerImage.width)
-    enemyImage_merge.height = Math.floor(playerImage.height)
+    enemyImage_merge.width = Math.floor(1.5 * playerImage.width);
+    enemyImage_merge.height = Math.floor(playerImage.height);
 
+    var enemyImage_emails = new Image();
+    enemyImage_emails.src = "/static/images/emails.png";
+    enemyImage_emails.width = Math.floor(playerImage.width);
+    enemyImage_emails.height = Math.floor(playerImage.height);
 
+    var enemyImage_bluescreen = new Image();
+    enemyImage_bluescreen.src = "/static/images/bluescreen.png";
+    enemyImage_bluescreen.width = Math.floor(playerImage.width);
+    enemyImage_bluescreen.height = Math.floor(playerImage.height);
+
+    var explodeSound = new Audio('/static/images/cutexplosionSound.wav');
     // Player score
     var score = 0;
 
@@ -53,11 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
         checkHit(touchX, touchY);
     }
 
-    function resetBackground() {
-        canvas.style.backgroundColor = "white";
-
-    }
-
     function checkHit(x, y) {
         // Check if the click/tap hits any enemy
         for (var i = enemies.length - 1; i >= 0; i--) {
@@ -69,7 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 y < enemy.y + enemy.radius
             ) {
                 // Remove the enemy and increase the score
-                explode(enemy.x+enemy.texture.width/2,enemy.y+enemy.texture.height/2)
+                explodeSound.load();
+                explodeSound.play();
+                render.play();
+                animateParticules(enemy.x, enemy.y);
                 enemies.splice(i, 1);
                 score += 10;
                 return; // Exit the loop if a hit is detected
@@ -80,22 +91,27 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateGame() {
         // Generate enemies attracted to the player
         if (Math.random() < 0.02) {
-            var dice = Math.floor(Math.random() * 2);
+            var dice = Math.floor(Math.random() * 4);
+            console.log(dice);
             var enemyText;
             switch (dice) {
                 case 0:
                     enemyText = enemyImage_merge;
-                    console.log(dice);
                     break;
                 case 1:
                     enemyText = enemyImage_printer;
+                    break;
+                case 2:
+                    enemyText = enemyImage_emails;
+                    break;
+                case 3:
+                    enemyText = enemyImage_bluescreen;
             }
             var enemy = {
                 radius: enemyText.width,
                 speed: Math.random() * 2 + 1, // Random speed between 1 and 3
                 texture: enemyText
             };
-            console.log(enemy.texture.src);
             // Initialize enemy position at the border of the canvas and above half the height
             var borderPosition = Math.random() * 2; // 0: left/right border, 1: top/bottom border
             if (borderPosition < 1) {
@@ -139,13 +155,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 enemies.splice(index, 1);
                 score -= 10;
                 score = Math.max(0, score);
-                canvas.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
-                setTimeout(resetBackground, 100);
+                applyRedTranslucentEffect();
             }
         });
 
         // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
         // Draw the player
         ctx.drawImage(playerImage, player.x, player.y, playerImage.width, playerImage.height);
@@ -167,42 +183,120 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Start the game loop
     updateGame();
-    // explosion construction
-    function explode(x, y) {
-        var particles = 15,
-            // explosion container and its reference to be able to delete it on animation end
-            explosion = $('<div class="explosion"></div>');
 
-        // put the explosion container into the body to be able to get it's size
-        $('body').append(explosion);
+    var numberOfParticules = 30;
 
-        // position the container to be centered on click
-        explosion.css('left', x - explosion.width() / 2);
-        explosion.css('top', y - explosion.height() / 2);
+    var colors = ['#9b2948', '	#ff7251', '#ffca7b', '#ffcd74', '#ffedbf'];
 
-        for (var i = 0; i < particles; i++) {
-            // positioning x,y of the particle on the circle (little randomized radius)
-            var x = (explosion.width() / 2) + rand(80, 150) * Math.cos(2 * Math.PI * i / rand(particles - 10, particles + 10)),
-                y = (explosion.height() / 2) + rand(80, 150) * Math.sin(2 * Math.PI * i / rand(particles - 10, particles + 10)),
-                color = rand(100, 255) + ', ' + rand(0, 50) + ', ' + rand(0, 100), // randomize the color rgb
-                // particle element creation (could be anything other than div)
-                elm = $('<div class="particle" style="' +
-                    'background-color: rgb(' + color + ') ;' +
-                    'top: ' + y + 'px; ' +
-                    'left: ' + x + 'px"></div>');
+    var overlay = document.createElement("div");
+    overlay.style.position = "absolute";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+    overlay.style.pointerEvents = "none"; // Allow interaction with elements beneath the overlay
+    overlay.style.display = "none"; // Hide the overlay by default
 
-            if (i == 0) { // no need to add the listener on all generated elements
-                // css3 animation end detection
-                elm.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (e) {
-                    explosion.remove(); // remove this explosion container when animation ended
-                });
-            }
-            explosion.append(elm);
+    document.body.appendChild(overlay);
+
+    // Function to apply the red translucent effect
+    function applyRedTranslucentEffect() {
+        overlay.style.display = "block"; // Show the overlay
+        setTimeout(resetBackground, 100);
+    }
+    function resetBackground() {
+        overlay.style.display = "none"; // Hide the overlay after a short delay
+    }
+    function setParticuleDirection(p) {
+        var angle = anime.random(0, 360) * Math.PI / 180;
+        var value = anime.random(50, 180);
+        var radius = [-1, 1][anime.random(0, 1)] * value;
+        return {
+            x: p.x + radius * Math.cos(angle),
+            y: p.y + radius * Math.sin(angle)
         }
     }
 
-    // get random number between min and max value
-    function rand(min, max) {
-        return Math.floor(Math.random() * (max + 1)) + min;
+    function createParticule(x, y) {
+        var p = {};
+        p.x = x;
+        p.y = y;
+        p.color = colors[anime.random(0, colors.length - 1)];
+        p.radius = anime.random(16, 32);
+        p.endPos = setParticuleDirection(p);
+        p.draw = function () {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, true);
+            ctx.fillStyle = p.color;
+            ctx.fill();
+        }
+        return p;
     }
+
+    function createCircle(x, y) {
+        var p = {};
+        p.x = x;
+        p.y = y;
+        p.color = '#FF0000';
+        p.radius = 1;
+        p.alpha = .5;
+        p.lineWidth = 6;
+        p.draw = function () {
+            ctx.globalAlpha = p.alpha;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, true);
+            ctx.lineWidth = p.lineWidth;
+            ctx.strokeStyle = p.color;
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+        }
+        return p;
+    }
+
+    function renderParticule(anim) {
+        for (var i = 0; i < anim.animatables.length; i++) {
+            anim.animatables[i].target.draw();
+        }
+    }
+
+    function animateParticules(x, y) {
+        var circle = createCircle(x, y);
+        var particules = [];
+        for (var i = 0; i < numberOfParticules; i++) {
+            particules.push(createParticule(x, y));
+        }
+        anime.timeline().add({
+            targets: particules,
+            x: function (p) { return p.endPos.x; },
+            y: function (p) { return p.endPos.y; },
+            radius: 0.1,
+            duration: anime.random(1200, 1800),
+            easing: 'easeOutExpo',
+            update: renderParticule
+        })
+            .add({
+                targets: circle,
+                radius: anime.random(40, 80),
+                lineWidth: 0,
+                alpha: {
+                    value: 0,
+                    easing: 'linear',
+                    duration: anime.random(600, 800),
+                },
+                duration: anime.random(600, 900),
+                easing: 'easeOutExpo',
+                update: renderParticule,
+                offset: 0
+            });
+    }
+
+    var render = anime({
+        duration: Infinity,
+        update: function () {
+            ctx.clearRect(0, 0, ctx.width, ctx.height);
+        }
+    });
+
+
 });
