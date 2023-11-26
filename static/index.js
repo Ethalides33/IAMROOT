@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if ($('#nickname').val() != '') {
             $('#nickname').prop('disabled', true);
             $('#submit').prop('disabled', true);
+            let jury = $('#isjury').data('value');
             let nickname = $('#nickname').val();
             let uuid = uuidv4();
             localStorage.setItem('office_game_token', uuid);
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: {
                     nickname: nickname,
                     token: uuid,
+                    jury: jury
                 }
             })
         }

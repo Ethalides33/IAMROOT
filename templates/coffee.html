@@ -65,6 +65,7 @@
             background: rgb(5, 2, 17);
             color: azure;
             z-index: 100000;
+            overflow: hidden;
         }
         #timeRemaining{
             padding: 20px;
@@ -90,11 +91,16 @@
     <div id="gameRules" class="d-flex flex-column justify-content-around">
         <div>
             <h3 class="text-center">Need... More !</h3>
-            <h2 class="text-center">Game starts in <span id="seconds">7</span> seconds !</h2>
+            <h6 class="text-center">Game starts in <span id="seconds">7</span> seconds !</h6>
         </div>
         <div class="p-2 text-center">Fill the cup with as much coffee as possible to maximize your energy bar !</div>
-        <div class="text-center">
-            <img src="static/images/tutocafe.jpg",width="150",height="300"/>
+        <div class="row">
+            <div class="col-6 mt-auto">
+                <img src="static/images/tweek.gif" width="150"/>
+            </div>
+            <div class="col-6">
+                <img src="static/images/tutocafe.jpg" width="150" height="300"/>
+            </div>
         </div>
     </div>
     <div class="container-flex">
