@@ -249,12 +249,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Ensure the fill level does not exceed the cup height
         coffeeCup.fillLevel = Math.min(coffeeCup.fillLevel, coffeeCup.maxFill);
-
-        // Check if the cup is full
-        if (coffeeCup.fillLevel >= coffeeCup.maxFill) {
-            alert('Coffee cup full! You win!');
-            resetGame();
-        }
     }
 
     // Draw the game elements
