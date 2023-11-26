@@ -22,13 +22,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     await linkScraper();
 
-    const elements = [{ "Name": "mouse", "positionxgood": "309px", "positionygood": "540px", "positionxbad": "200px", "positionybad": "400px" },
-    { "Name": "keys", "positionxgood": "320px", "positionygood": "180px", "positionxbad": "300px", "positionybad": "100px" },
-    { "Name": "wallet", "positionxgood": "295px", "positionygood": "650px", "positionxbad": "50px", "positionybad": "500px" },
+    const elements = [{ "Name": "mouse", "positionxgood": "309px", "positionygood": "515px", "positionxbad": "200px", "positionybad": "400px" },
+    { "Name": "keys", "positionxgood": "320px", "positionygood": "130px", "positionxbad": "300px", "positionybad": "100px" },
+    { "Name": "wallet", "positionxgood": "225px", "positionygood": "600px", "positionxbad": "50px", "positionybad": "500px" },
     { "Name": "screen", "positionxgood": "194px", "positionygood": "394px", "positionxbad": "150px", "positionybad": "200px" },
-    { "Name": "keyboard", "positionxgood": "293px", "positionygood": "394px", "positionxbad": "300px", "positionybad": "300px" },
-    { "Name": "mug", "positionxgood": "280px", "positionygood": "230px", "positionxbad": "150px", "positionybad": "500px" },
-    { "Name": "casse_tete", "positionxgood": "305px", "positionygood": "750px", "positionxbad": "150px", "positionybad": "600px" },
+    { "Name": "keyboard", "positionxgood": "285px", "positionygood": "384px", "positionxbad": "300px", "positionybad": "300px" },
+    { "Name": "mug", "positionxgood": "280px", "positionygood": "185px", "positionxbad": "150px", "positionybad": "500px" },
+    { "Name": "casse_tete", "positionxgood": "300px", "positionygood": "560px", "positionxbad": "150px", "positionybad": "600px" },
     { "Name": "chien", "positionxgood": "257px", "positionygood": "564px", "positionxbad": "250px", "positionybad": "300px" },
     ];
 
