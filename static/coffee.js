@@ -18,7 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
     pourcoffee_image.width = 120;
     pourcoffee_image.height = 130;
 
-
+    var mugImage = new Image();
+    mugImage.src = "/static/images/mug4.png";
+    mugImage.width = 150;
+    mugImage.height = 150;
 
     var stanrock = new Image();
     stanrock.src = "/static/images/rock.png";
@@ -40,10 +43,10 @@ document.addEventListener("DOMContentLoaded", function () {
     //surface of water
     var START_Y = canvas.height / 1.75;
     //the depths
-    var END_Y = canvas.height-50;
+    var END_Y = canvas.height-15;
 
     //start height
-    var HEIGHT = canvas.height-75;
+    var HEIGHT = canvas.height-15;
 
     /*VARIABLES TO TWEAK*/
     //spring constant
@@ -87,13 +90,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const coffeeCup = {
         x: 0,
-        y: canvas.height - 50,
+        y: canvas.height - 150,
         width: 100,
-        height: 80,
+        height: HEIGHT,
         color: '#8B4513',
         speed: 2,
         fillLevel: 0,
-        maxFill: 50,
+        maxFill: 75,
     };
 
     // Coffee flask
@@ -245,6 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function drawCoffeeCup() {
+        ctx.drawImage(mugImage,coffeeCup.x,coffeeCup.y,mugImage.width,mugImage.height);
         // Draw cup base
         // ctx.fillStyle = '#8B4513'; // Brown color
         // ctx.beginPath();
@@ -257,25 +261,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // ctx.quadraticCurveTo(100, 150, 250, 300); // Quadratic Bezier curve
         // ctx.lineTo(150, 300); // Connect to the starting point
-        ctx.closePath();
-        ctx.fill();
+        // ctx.closePath();
+        // ctx.fill();
 
-        ctx.beginPath();
-        ctx.moveTo(coffeeCup.x - 5, coffeeCup.y - coffeeCup.height); // Starting point
-        ctx.lineTo(coffeeCup.x - 5 + coffeeCup.height / Math.tan(9.5 * Math.PI / 20.), coffeeCup.y); // Starting point
-        ctx.lineTo(coffeeCup.x + 5 - (coffeeCup.height / Math.tan(9.5 * Math.PI / 20.)) + coffeeCup.width, coffeeCup.y);
-        ctx.lineTo(coffeeCup.x + 5 + coffeeCup.width, coffeeCup.y - coffeeCup.height);
+        // ctx.beginPath();
+        // ctx.moveTo(coffeeCup.x - 5, coffeeCup.y - coffeeCup.height); // Starting point
+        // ctx.lineTo(coffeeCup.x - 5 + coffeeCup.height / Math.tan(9.5 * Math.PI / 20.), coffeeCup.y); // Starting point
+        // ctx.lineTo(coffeeCup.x + 5 - (coffeeCup.height / Math.tan(9.5 * Math.PI / 20.)) + coffeeCup.width, coffeeCup.y);
+        // ctx.lineTo(coffeeCup.x + 5 + coffeeCup.width, coffeeCup.y - coffeeCup.height);
 
-        ctx.strokeStyle = "#f00";
-        ctx.lineWidth = 10;
+        // ctx.strokeStyle = "#f00";
+        // ctx.lineWidth = 10;
 
-        ctx.stroke();
-        // Draw cup handle
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(coffeeCup.x + 5 - (3 / 5.) * (coffeeCup.height / Math.tan(9.5 * Math.PI / 20.)) + coffeeCup.width, coffeeCup.y - coffeeCup.height * 2 / 5.);
-        ctx.quadraticCurveTo(coffeeCup.x + coffeeCup.width + 75, coffeeCup.y - coffeeCup.height * 0.5, coffeeCup.x + 5 - (1 / 5.) * (coffeeCup.height / Math.tan(9.5 * Math.PI / 20.)) + coffeeCup.width, coffeeCup.y - coffeeCup.height * 4 / 5.);
-        ctx.stroke();
+        // ctx.stroke();
+        // // Draw cup handle
+        // ctx.lineWidth = 2;
+        // ctx.beginPath();
+        // ctx.moveTo(coffeeCup.x + 5 - (3 / 5.) * (coffeeCup.height / Math.tan(9.5 * Math.PI / 20.)) + coffeeCup.width, coffeeCup.y - coffeeCup.height * 2 / 5.);
+        // ctx.quadraticCurveTo(coffeeCup.x + coffeeCup.width + 75, coffeeCup.y - coffeeCup.height * 0.5, coffeeCup.x + 5 - (1 / 5.) * (coffeeCup.height / Math.tan(9.5 * Math.PI / 20.)) + coffeeCup.width, coffeeCup.y - coffeeCup.height * 4 / 5.);
+        // ctx.stroke();
 
     }
 
@@ -571,13 +575,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 var x = HEIGHT - this.height;
                 this.speed += TENSION * x - this.speed * DAMP;
                 this.height += this.speed;
-                this.x = coffeeCup.x+(j * WAVE_FREQ)*coffeeCup.width/cwidth;
-                HEIGHT = coffeeCup.y - coffeeCup.fillLevel;
+                this.x = coffeeCup.x+22+(j * WAVE_FREQ)*(mugImage.width-68)/cwidth;
+                HEIGHT = cheight-15 - coffeeCup.fillLevel;
             };
 
             springs[i] = nw;
         }
-
         gameLoop();
     }
 
