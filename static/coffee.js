@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             const touchX = e.touches[0].clientX;
             const newX = touchX - offsetX;
 
-            if (newX > 0 && newX < canvas.width - coffeeFlask.width) {
+            if (newX > -coffeeFlask.width/2. && newX < canvas.width - coffeeFlask.width) {
                 coffeeFlask.x = newX;
             }
         }
@@ -648,7 +648,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     init();
     // Start the game loop
 
-    var timer = 15;
+    var timer = 20;
     setInterval(() => {
         if (continueRunning && timer <= 0) {
             continueRunning = false;
