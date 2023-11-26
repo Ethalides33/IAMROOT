@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
+    setInterval(() => {
+        $.ajax({
+            url: '/heartbeat',
+            type: 'POST',
+            data: {
+                token: localStorage.getItem('office_game_token') || '',
+            },
+        })
+    }, 3000);
 
     const canvas = document.getElementById('coffee-canvas');
     const ctx = canvas.getContext('2d');
@@ -194,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 createSplash(coffeeDrops[i]);
                 coffeeCup.fillLevel += 0.5;
                 score = 1000*(coffeeCup.fillLevel/coffeeCup.maxFill);
+                $('#score').text(score);
                 coffeeDrops.splice(i, 1);
                 i--;
             }
@@ -586,7 +596,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function redrawProgress(pct) {
         x0 = cwidth/5.;
-        y0 = 50;
+        y0 = 65;
         dX = 250;
         // create a linear gradient in the area of the progress bar
         var gradient = ctx.createLinearGradient(x0, 50, x0+100, y0)

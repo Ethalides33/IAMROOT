@@ -9,7 +9,7 @@ body, html {
 .background-image {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: calc(100vh - 8vh);
   background-size: 100% 100%;
   /* Force l'image à couvrir entièrement le conteneur, peut causer une déformation */
   background-repeat: no-repeat;

@@ -7,6 +7,9 @@
     border: 1px azure solid;
     border-top: none;
 }
+.xlsx-left-num:first-child{
+    border-top: 1px azure solid;
+}
 .xlsx-cell{
     color: azure;
     border-bottom: 1px azure solid;
