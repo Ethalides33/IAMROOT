@@ -642,16 +642,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     init();
     // Start the game loop
 
-    var timer = 20;
+    var timerSec = 20;
     setInterval(() => {
-        if (continueRunning && timer <= 0) {
+        if (continueRunning && timerSec <= 0) {
             continueRunning = false;
             $.ajax({
                 url: '/score',
                 method: 'POST',
                 data: {
                     score: Math.round(score),
-                    token: localStorage.getItem('office_game_token')
+                    token: lpocalStorage.getItem('office_game_token')
                 },
                 success: function () {
                     setTimeout(() => {
@@ -660,9 +660,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 }
             })
         }
-        if (timer < 0) timer = 0;
-        $('#timeRemaining .second').text(timer);
-        timer--;
+        if (timerSec < 0) timerSec = 0;
+        $('#timeRemaining .second').text(timerSec);
+        timerSec--;
     }, 1000)
 
 });
