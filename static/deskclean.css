@@ -112,3 +112,9 @@ x-sign {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+h3{
+  font-size: 35px;
+}
+.text-center.p-2{
+    font-size: 20px;
+}

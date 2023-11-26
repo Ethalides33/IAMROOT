@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 db = sqlite3.connect('db.db')
 cr = db.cursor()
-cr.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, nickname TEXT, score INTEGER, token TEXT, last_update DATETIME)')
+cr.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, nickname TEXT, score INTEGER, token TEXT, last_update DATETIME, is_jury INTEGER)')
 cr.execute('CREATE TABLE IF NOT EXISTS config (key TEXT, value TEXT, UNIQUE(key, value))')
 cr.execute("INSERT OR IGNORE INTO config (key, value) VALUES ('start', '%s');"% (datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 db.commit()
@@ -41,7 +41,8 @@ def insert_update(*query):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    j = request.args.get('j', False)
+    return render_template('index.html', j=True if j else False)
 
 @app.route('/heartbeat', methods=['POST', 'GET'])
 def heartbeat():
@@ -70,7 +71,9 @@ def setstart():
 def register():
     nickname = request.form['nickname']
     token = request.form['token']
-    insert_update('INSERT INTO users (nickname, token, last_update, score) VALUES (?, ?, ?, ?)', (nickname, token, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 0))
+    jury = request.form['jury']
+    jury = 1 if jury == 'True' else 0
+    insert_update('INSERT INTO users (nickname, token, last_update, score, is_jury) VALUES (?, ?, ?, ?, ?)', (nickname, token, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), 10000 if jury else 0, jury))
     return 'ok'
 
 @app.route('/shooter')
@@ -104,7 +107,7 @@ def add_score():
         score = data.get('score')
         insert_update('UPDATE users SET score=score+? WHERE token=?', (score, token))
         return 'ok'
-    
+
 @app.route('/admin')
 def admin():
     return render_template('admin.html')
