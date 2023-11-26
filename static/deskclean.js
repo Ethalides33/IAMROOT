@@ -1,4 +1,26 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+
+    var timer = 7;
+    const linkScraper = async () => {
+        return new Promise((resolve, reject) => {
+            const interval = setInterval(async () => {
+                try {
+                    if (timer <= 0) {
+                        $('#gameRules').addClass('d-none');
+                        resolve()
+                    }
+                    $('#seconds').text(timer);
+                    timer--;
+                } catch (e) {
+                    clearInterval(interval);
+                    reject(e);
+                }
+            }, 1000);
+
+        });
+    }
+
+    await linkScraper();
 
     const elements = [{ "Name": "mouse", "positionxgood": "309px", "positionygood": "540px", "positionxbad": "200px", "positionybad": "400px" },
     { "Name": "keys", "positionxgood": "320px", "positionygood": "180px", "positionxbad": "300px", "positionybad": "100px" },
@@ -134,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let counter = 0;
         setInterval(() => {
             if (counter > 3) {
-                window.location.href = '/leaderboard';
+                window.location.href = '/coffee';
             }
             counter += 1;
         }, 1000);

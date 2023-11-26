@@ -23,6 +23,7 @@
         }
 
         #score_header {
+            position: relative;
             height: 8vh;
             width: 100%;
             background: rgb(5, 2, 17);
@@ -54,12 +55,51 @@
             animation: flicker steps(100) var(--interval) 1s infinite;
             font-size: 28px;
         }
+        #gameRules{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(5, 2, 17);
+            color: azure;
+            z-index: 100000;
+        }
+        #timeRemaining{
+            padding: 20px;
+            border-radius: 50%;
+            border: 2px azure solid;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+        }
+        #timeRemaining .second{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 
 <body>
+    <div id="gameRules" class="d-flex flex-column justify-content-around">
+        <div>
+            <h2 class="text-center">Titre du jeu</h2>
+            <h6 class="text-center">Ca commence dans <span id="seconds">7</span> secondes !</h6>
+        </div>
+        <div class="p-2 text-center">Les règles du jeu lolil</div>
+        <div class="text-center">
+            <img src="https://dummyimage.com/100x100/000/fff"/>
+        </div>
+    </div>
     <div class="container-flex">
         <div id="score_header">
+            <div id="timeRemaining"><span class="second">12</span></div>
             <div class="d-flex">
                 <div class="col-6 text-end me-0 pe-0">
                     <h2 class="me-0 pe-0">

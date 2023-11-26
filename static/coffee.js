@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+    var continueRunning = true;
     setInterval(() => {
         $.ajax({
             url: '/heartbeat',
@@ -8,6 +9,28 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         })
     }, 3000);
+
+    var timer = 7;
+    const linkScraper = async () => {
+        return new Promise((resolve, reject) => {
+            const interval = setInterval(async () => {
+                try {
+                    if (timer <= 0) {
+                        $('#gameRules').addClass('d-none');
+                        resolve()
+                    }
+                    $('#seconds').text(timer);
+                    timer--;
+                } catch (e) {
+                    clearInterval(interval);
+                    reject(e);
+                }
+            }, 1000);
+
+        });
+    }
+
+    await linkScraper();
 
     const canvas = document.getElementById('coffee-canvas');
     const ctx = canvas.getContext('2d');
@@ -203,7 +226,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 createSplash(coffeeDrops[i]);
                 coffeeCup.fillLevel += 0.5;
                 score = 1000*(coffeeCup.fillLevel/coffeeCup.maxFill);
-                $('#score').text(score);
+                t = parseInt(score);
+                if (t>1000) t=1000;
+                $('#score').text(t);
                 coffeeDrops.splice(i, 1);
                 i--;
             }
@@ -321,9 +346,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Game loop
     function gameLoop() {
-        update();
-        draw();
-        requestAnimationFrame(gameLoop);
+        if (continueRunning) {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
     }
 
     function updateParticles() {
@@ -620,4 +647,28 @@ document.addEventListener("DOMContentLoaded", function () {
     //begin
     init();
     // Start the game loop
+
+    var timer = 12;
+    setInterval(() => {
+        if (continueRunning && timer <= 0) {
+            continueRunning = false;
+            $.ajax({
+                url: '/score',
+                method: 'POST',
+                data: {
+                    score: Math.round(score),
+                    token: localStorage.getItem('office_game_token')
+                },
+                success: function () {
+                    setTimeout(() => {
+                        window.location.href = '/leaderboard';
+                    }, 3000);
+                }
+            })
+        }
+        if (timer < 0) timer = 0;
+        $('#timeRemaining .second').text(timer);
+        timer--;
+    }, 1000)
+
 });

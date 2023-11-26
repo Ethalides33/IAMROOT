@@ -1,8 +1,30 @@
 // game.js
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+    var timer = 7;
+    const linkScraper = async () => {
+        return new Promise((resolve, reject) => {
+            const interval = setInterval(async () => {
+                try {
+                    if (timer <= 0) {
+                        $('#gameRules').addClass('d-none');
+                        resolve()
+                    }
+                    $('#seconds').text(timer);
+                    timer--;
+                } catch (e) {
+                    clearInterval(interval);
+                    reject(e);
+                }
+            }, 1000);
+
+        });
+    }
+
+    await linkScraper();
+
     let keeprunning = true;
-    
+
     var canvas = document.getElementById("shooter-canvas");
     var ctx = canvas.getContext("2d");
     canvas.style.backgroundColor = "white";
@@ -29,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var enemyImage_merge = new Image();
     enemyImage_merge.src = "/static/images/mergeconflict.png";
     enemyImage_merge.width = Math.floor(1.75 * playerImage.width);
-    enemyImage_merge.height = Math.floor(1.75*playerImage.height);
+    enemyImage_merge.height = Math.floor(1.75 * playerImage.height);
 
     var enemyImage_emails = new Image();
     enemyImage_emails.src = "/static/images/emails.png";
@@ -49,8 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var enemyImage_computervirus = new Image();
     enemyImage_computervirus.src = "/static/images/computervirus.png";
-    enemyImage_computervirus.width = Math.floor(1.5*playerImage.width);
-    enemyImage_computervirus.height = Math.floor(1.5*playerImage.height);
+    enemyImage_computervirus.width = Math.floor(1.5 * playerImage.width);
+    enemyImage_computervirus.height = Math.floor(1.5 * playerImage.height);
 
     var successSound = new Audio('/static/images/good.mp3');
     var damageSound = new Audio('/static/images/cutexplosionSound.wav');
@@ -106,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 successSound.load();
                 successSound.play();
                 render.play();
-                showText_plus=true;
+                showText_plus = true;
                 textX = enemy.x;
                 textY = enemy.y;
                 animateParticules(enemy.x, enemy.y, "+10 !");
@@ -215,12 +237,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // ctx.font = "24px Arial";
         // ctx.fillText("Score: " + score, 20, 30);
         $('#score').text(score);
-        if(showText_plus){
-            showArcadeText(textX,textY,"+10 !","#2CEAF7");
-            showText_plus= false;
+        if (showText_plus) {
+            showArcadeText(textX, textY, "+10 !", "#2CEAF7");
+            showText_plus = false;
         }
-        if(showText_minus){
-            showArcadeText(player.x+25,player.y,"-5 !","#DA0646");
+        if (showText_minus) {
+            showArcadeText(player.x + 25, player.y, "-5 !", "#DA0646");
             showText_minus = false;
         }
 
@@ -382,7 +404,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let counter = 0;
     let callDone = false;
     setInterval(() => {
-        if (counter > 30) {
+        if (counter > 25) {
             if (!callDone) {
                 keeprunning = false;
                 $.ajax({
@@ -392,17 +414,21 @@ document.addEventListener("DOMContentLoaded", function () {
                         token: localStorage.getItem('office_game_token') || '',
                         score: score,
                     },
-                    success: function() {
+                    success: function () {
                         callDone = true;
                         console.log('SUCCESS');
                         console.log($);
                         $('#score_header').html('<div class="row"><div class="col-12 text-center"><h2><x-sign>Score saved !</x-sign></h2></div></div>');
                     }
                 });
-                setTimeout(function(){
+                setTimeout(function () {
                     window.location.href = '/deskclean';
                 }, 3000);
             }
+        }
+        else {
+            console.log('ELSE');
+            $('#timeRemaining .second').text(String(25 - counter).padStart(2, '0'));
         }
         counter += 1;
     }, 1000);
