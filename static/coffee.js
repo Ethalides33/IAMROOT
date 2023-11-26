@@ -648,7 +648,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     init();
     // Start the game loop
 
-    var timer = 12;
+    var timer = 15;
     setInterval(() => {
         if (continueRunning && timer <= 0) {
             continueRunning = false;
