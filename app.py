@@ -108,7 +108,7 @@ def add_score():
         insert_update('UPDATE users SET score=score+? WHERE token=?', (score, token))
         return 'ok'
 
-@app.route('/admin')
+@app.route('/plop')
 def admin():
     return render_template('admin.html')
 
